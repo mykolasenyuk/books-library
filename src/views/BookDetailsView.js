@@ -1,16 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { booksOperations } from '../redux/books'
+import { booksSelectors } from '../redux/books/booksSlice'
 
-import * as booksApi from '../services/bookApi'
+// import * as booksApi from '../services/bookApi'
 
 export default function BookDetailsView() {
   const { bookId } = useParams()
-  //   console.log(bookId)
-  const [book, setBook] = useState(null)
+  const dispatch = useDispatch()
+
+  const book = useSelector((state) => booksSelectors.selectById(state, bookId))
 
   useEffect(() => {
-    booksApi.getBookById(bookId).then(setBook)
-  }, [bookId])
+    dispatch(booksOperations.fetchBookById(bookId))
+  }, [bookId, dispatch])
 
   return (
     <>

@@ -2,7 +2,7 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import { fetchBooks, fetchBookById } from './booksOperations'
 
 const booksAdapter = createEntityAdapter({
-  selectId: (book) => book.id,
+  selectId: (book) => book._id,
 })
 
 const booksSlice = createSlice({

@@ -15,9 +15,12 @@ export const fetchBooks = createAsyncThunk(
 
 export const fetchBookById = createAsyncThunk(
   'books/fetchBookById',
-  async (bookId) => {
-    const book = await bookApi.getBookById(bookId)
-
-    return book
+  async (bookId, { rejectWithValue }) => {
+    try {
+      const book = await bookApi.getBookById(bookId)
+      return book
+    } catch (error) {
+      return rejectWithValue(error)
+    }
   },
 )

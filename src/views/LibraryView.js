@@ -9,8 +9,8 @@ export default function LibraryView() {
   const { url } = useRouteMatch()
   //   const [books, setBooks] = useState(null)
   const dispatch = useDispatch()
-  const books = useSelector(booksSelectors.)
-
+  const books = useSelector(booksSelectors.selectAll)
+  //   const book = useSelector(booksSelectors.selectById)
   useEffect(() => {
     dispatch(booksOperations.fetchBooks())
   }, [dispatch])

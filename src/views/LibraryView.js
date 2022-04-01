@@ -4,25 +4,31 @@ import { Link, useRouteMatch } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { booksOperations } from '../redux/books'
 import { booksSelectors } from '../redux/books/booksSlice'
+import s from './LibraryView.module.css';
+
 
 export default function LibraryView() {
   const { url } = useRouteMatch()
-  //   const [books, setBooks] = useState(null)
   const dispatch = useDispatch()
   const books = useSelector(booksSelectors.selectAll)
-  //   const book = useSelector(booksSelectors.selectById)
   useEffect(() => {
     dispatch(booksOperations.fetchBooks())
   }, [dispatch])
   return (
+   
     <>
       <h1>Library</h1>
 
-      {books && (
-        <ul>
+      {books && books.length && (
+
+        <ul className={s.gallery}>
           {books.map((book) => (
-            <li key={book._id}>
-              <Link to={`${url}/${book._id}`}>{book.title}</Link>
+            <li key={book._id}  className={s.galleryItem}>
+              <Link to={`${url}/${book._id}`}>
+              <img  className={s.galleryImage} src = { book.thumbnailUrl ? `${book.thumbnailUrl}`
+                  : `https://www.peakndt.com/wp-content/uploads/2017/02/No_picture_available.png`} alt = {book.title}/>
+              <p  className={s.galleryTitle}>{book.title}</p>
+              </Link>
             </li>
           ))}
         </ul>

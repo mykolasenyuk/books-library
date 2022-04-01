@@ -15,12 +15,14 @@ const booksSlice = createSlice({
       booksAdapter.upsertMany(state, action.payload)
     },
     [fetchBookById.fulfilled](state, action) {
-      booksAdapter.upsertMany(state, action.payload.books)
+      booksAdapter.upsertMany(state, [action.payload])
     },
   },
 })
 
 const selectors = booksAdapter.getSelectors((state) => state.books)
+// const selector = booksAdapter.getSelectors((state) => state.book)
 
+// export const bookSelector = selector
 export const booksSelectors = selectors
 export const booksReducer = booksSlice.reducer

@@ -19,7 +19,7 @@ export default function LibraryView() {
     <>
       
 
-      {books && books.length && (
+      {books && books.length>0 && (
 
         <ul className={s.gallery}>
           {books.map((book) => (

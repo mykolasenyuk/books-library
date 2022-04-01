@@ -22,7 +22,8 @@ export default function BookDetailsView() {
 
       {book && (
         <div className={s.bookContainer}>
-          <img className={s.bookImage} src={book.thumbnailUrl} alt={book.title} />
+          <img className={s.bookImage} src = { book.thumbnailUrl ? `${book.thumbnailUrl}`
+                  : `https://www.peakndt.com/wp-content/uploads/2017/02/No_picture_available.png`} alt={book.title} />
           <div className={s.bookDetailsContainer}>
           <h2 className={s.bookTitle}>{book.title}</h2>
           <p className={s.text}>Authors: {book.authors}</p>

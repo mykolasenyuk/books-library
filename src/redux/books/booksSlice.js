@@ -21,8 +21,6 @@ const booksSlice = createSlice({
 })
 
 const selectors = booksAdapter.getSelectors((state) => state.books)
-// const selector = booksAdapter.getSelectors((state) => state.book)
 
-// export const bookSelector = selector
 export const booksSelectors = selectors
 export const booksReducer = booksSlice.reducer

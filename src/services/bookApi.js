@@ -11,13 +11,13 @@ export async function getBookById(bookId) {
   const { data } = await axios.get(`/books/${bookId}`)
   return data.result
 }
-// export async function addContact(book) {
-//   const { data } = await axios.post('/contacts', contact)
+export async function addContact(book) {
+  const { data } = await axios.post('/', book)
 
-//   return data
-// }
+  return data
+}
 
-// export async function dltContact(id) {
-//   await axios.delete(`/contacts/${id}`)
-//   return id
-// }
+export async function dltContact(id) {
+  await axios.delete(`/books/${id}`)
+  return id
+}

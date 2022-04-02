@@ -12,9 +12,8 @@ export default function MediaCard() {
         component="img"
       
         image={image}
-        alt="green iguana"
+        alt="Library"
       />
-        {/* <img src = {image} alt="library"/> */}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
         Welcome to the Burns Park Elementary Library!

@@ -1,13 +1,38 @@
 import { useEffect } from 'react'
-// import * as booksApi from '../services/bookApi'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { booksOperations } from '../redux/books'
 import { booksSelectors } from '../redux/books/booksSlice'
-import s from './LibraryView.module.css';
+import {Container,Grid,Card, CardMedia,CardContent,Typography} from '@material-ui/core'
+import {makeStyles} from "@material-ui/core/styles"
 
+
+const useStyles = makeStyles((theme)=>({
+  root:{
+    flexHGrow:1
+  },
+  cardMedia:{
+    paddingTop:"100%"
+  },
+  cardContent:{
+   flexGrow:1 
+  },
+  cardGrid:{
+    marginTop:theme.spacing(4)
+  },
+  cardTitle:{
+    textDecoration: "none",
+    color: "rgb(15, 16, 59)"
+  },
+ 
+
+ 
+
+}))
 
 export default function LibraryView() {
+  const classes = useStyles()
+
   const { url } = useRouteMatch()
   const dispatch = useDispatch()
   const books = useSelector(booksSelectors.selectAll)
@@ -16,23 +41,29 @@ export default function LibraryView() {
   }, [dispatch])
   return (
    
-    <>
-      
+    <Container className={classes.cardGrid}>
+    {books && !!books.length && (
 
-      {books && books.length>0 && (
-
-        <ul className={s.gallery}>
-          {books.map((book) => (
-            <li key={book._id}  className={s.galleryItem}>
-              <Link to={`${url}/${book._id}`}>
-              <img  className={s.galleryImage} src = { book.thumbnailUrl ? `${book.thumbnailUrl}`
-                  : `https://www.peakndt.com/wp-content/uploads/2017/02/No_picture_available.png`} alt = {book.title}/>
-              <p  className={s.galleryTitle}>{book.title}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
+<Grid container spacing={4}>
+  {books.map((book) => (
+    <Grid   item key={book._id} xs={12} sm={6} md={4}>
+      <Card>
+      <Link  to={`${url}/${book._id}`}>
+      <CardMedia 
+  className={classes.cardMedia}
+  image={ book.thumbnailUrl ? `${book.thumbnailUrl}`
+  : `https://www.peakndt.com/wp-content/uploads/2017/02/No_picture_available.png`}
+  title={book.title} />
+     
+          <CardContent className={classes.cardContent}>
+      <Typography  className={classes.cardTitle} variant='h5' >{book.title}</Typography>
+      </CardContent>
+      </Link>
+      </Card>
+    </Grid>
+  ))}
+</Grid>
+)}
+      </Container>
   )
 }

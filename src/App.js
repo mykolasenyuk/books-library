@@ -1,9 +1,11 @@
 import './App.css'
+import * as React from 'react';
 import { NavLink } from 'react-router-dom'
 import { lazy,Suspense } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import {Container,AppBar,Paper,Button} from '@material-ui/core'
+import {Container,AppBar,Paper,Button,Modal,Box,} from '@material-ui/core'
 import {makeStyles} from "@material-ui/core/styles"
+import Form from './components/Form/Form';
 import LoaderSpiner from './components/LoaderSpiner/LoaderSpiner'
 const HomeView = lazy(() =>
   import('./views/Homeview' /*webpackChunkName: "home-view"*/),
@@ -30,9 +32,20 @@ const useStyles = makeStyles((theme)=>({
     marginTop:theme.spacing(5)
   },
 
-  
-
 }))
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 
 
 
@@ -43,6 +56,9 @@ const useStyles = makeStyles((theme)=>({
 
 function App() {
   const classes = useStyles()
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <Container fixed>
       <AppBar  position='fixed' >
@@ -57,6 +73,17 @@ function App() {
       Library
     </NavLink>
     </Button>
+    <Button onClick={handleOpen}>Add Book</Button>
+    <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+     <Form/>
+        </Box>
+      </Modal>
           </Container >
       </AppBar>
       <Suspense fallback={<LoaderSpiner/>}>

@@ -24,3 +24,33 @@ export const fetchBookById = createAsyncThunk(
     }
   },
 )
+
+
+export const addBook = createAsyncThunk(
+  'books/addBook',
+  async(book,{rejectWithValue})=>{
+    try {
+      const item =await bookApi.addBook(book)
+      return item
+    } catch (error) {
+      return rejectWithValue(error.message)
+      
+    }
+  }
+)
+
+
+
+export const deleteBook = createAsyncThunk(
+  'books/deleteBook',
+  async(id,{rejectWithValue})=>{
+    try {
+      await bookApi.dltBook(id)
+      
+      return id
+    } catch (error) {
+      return rejectWithValue(error.message)
+      
+    }
+  }
+)

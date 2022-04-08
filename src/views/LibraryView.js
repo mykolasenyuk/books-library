@@ -3,7 +3,7 @@ import { Link, useRouteMatch } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { booksOperations } from '../redux/books'
 import { booksSelectors } from '../redux/books/booksSlice'
-import {Container,Grid,Card, CardMedia,CardContent,Typography} from '@material-ui/core'
+import {Container,Grid,Card, CardMedia,CardContent,Typography, Button} from '@material-ui/core'
 import {makeStyles} from "@material-ui/core/styles"
 
 
@@ -36,9 +36,16 @@ export default function LibraryView() {
   const { url } = useRouteMatch()
   const dispatch = useDispatch()
   const books = useSelector(booksSelectors.selectAll)
+  console.log(books.length);
   useEffect(() => {
-    dispatch(booksOperations.fetchBooks())
-  }, [dispatch])
+     dispatch(booksOperations.fetchBooks())
+  }, [dispatch, books.length])
+  // dispatch(booksOperations.fetchBooks())
+  function onDelete(id) {
+    dispatch(booksOperations.deleteBook(id))
+    dispatch(booksOperations.fetchBooks());
+   console.log(books.length)
+  }
   return (
    
     <Container className={classes.cardGrid}>
@@ -56,9 +63,10 @@ export default function LibraryView() {
   title={book.title} />
      
           <CardContent className={classes.cardContent}>
-      <Typography  className={classes.cardTitle} variant='h5' >{book.title}</Typography>
+      <Typography  className={classes.cardTitle} variant='h6' >{book.title}</Typography>
       </CardContent>
       </Link>
+      <Button onClick={()=>{onDelete(book._id)}}>Delete</Button>
       </Card>
     </Grid>
   ))}
